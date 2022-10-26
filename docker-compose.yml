@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: microblog
+      MYSQL_ROOT_PASSWORD: password 
+      TZ: Asia/Manila
+    restart: unless-stopped
+    volumes: [db:/var/lib/mysql]
+
+  web:
+    build:
+      args:
+        PHP_MODE: production
+      context: .
+    depends_on: [db]
+    restart: unless-stopped
+    volumes: [./:/var/www/html]
+
+volumes:
+  db:
