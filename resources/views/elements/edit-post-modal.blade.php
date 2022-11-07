@@ -19,12 +19,12 @@
                 ?>
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="title" value="{{ __('Title') }}" />
-                <x-jet-input wire:model.lazy="title" id="" name="title" type="text" class="mt-1 block w-full" placeholder="{{ $title }}" />
+                <x-jet-input wire:model.lazy="title" id="" name="title" type="text" class="mt-1 block w-full" placeholder="{{ $title }}" required/>
             </div>
 
             <div class="col-span-6 sm:col-span-4">
                 <x-jet-label for="body" value="{{ __('Description') }}" />
-                <x-jet-input wire:model.lazy="body" id="" name="body" id="" name="body" type="text" class="mt-1 block w-full" placeholder="{{ $body }}" />
+                <x-jet-input wire:model.lazy="body" id="" name="body" id="" name="body" type="text" class="mt-1 block w-full" placeholder="{{ $body }}" required/>
             </div>
 
             {{ __('Are you sure you want to edit this post?') }}

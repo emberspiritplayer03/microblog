@@ -20,9 +20,9 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
     public function update($user, array $input)
     {
         Validator::make($input, [
-            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:255'],
-            'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'name' => ['required', 'regex:/^[a-zA-Z\s]*$/', 'max:50'],
+            'username' => ['required', 'regex:/^[a-zA-Z0-9]*$/', 'max:50', Rule::unique('users')->ignore($user->id)],
+            'email' => ['required', 'email', 'max:100', Rule::unique('users')->ignore($user->id)],
             'is_private' => ['required'],
             'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
         ])->validateWithBag('updateProfileInformation');

@@ -68,7 +68,7 @@ class CommentPolicy
      */
     public function delete(User $user, Comment $comment, Post $post)
     {
-        return auth()->user()->role_id === 2 || $comment->user->id === auth()->id() || $post->user->id === auth()->id()
+        return $comment->user->id === auth()->id() || $post->user->id === auth()->id()
                     ? Response::allow()
                     : Response::deny('You do not own this comment.');
     }

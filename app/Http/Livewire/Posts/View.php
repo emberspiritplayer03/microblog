@@ -109,29 +109,33 @@ class View extends Component
                 'post_id' => $post->id,
                 'user_id' => Auth::id(),
             ]);
-            session()->flash('success', 'You liked the post!');
-            return redirect()->home();
+            return redirect();
         }
         $like->delete();
-        session()->flash('success', 'You unliked the post!');
-        return redirect()->home();
+        return redirect();
     }
 
     public function sharePost(Post $post)
     {
         $share = Share::where('user_id', Auth::id())
             ->where('post_id', $post->id);
+
+        $validatedData = Validator::make(
+            ['caption' => $this->caption],
+            ['caption' => ['max:5000', 'regex:/^[a-zA-Z0-9]*$/', 'string']]
+        )->validate();
+
         if (! $share->count()) {
             $new = Share::create([
                 'post_id' => $post->id,
                 'user_id' => Auth::id(),
-                'caption' => $this->caption,
+                'caption' => $validatedData['caption'],
             ]);
             session()->flash('success', 'You shared the post!');
             $this->isOpenShareModal = false;
-            return true;
+            return redirect()->home();
         }
-        return true;
+        return redirect()->home();
     }
 
     public function comments($post)
@@ -170,7 +174,6 @@ class View extends Component
         $this->setComments($post);
         $this->comment = '';
 
-        //$this->isOpenCommentModal = false;
         return redirect()->home();
     }
 
@@ -205,6 +208,7 @@ class View extends Component
             $share->delete();
             $this->isOpenShareModal = false;
             session()->flash('success', 'You unshared the post!');
+            return redirect()->home();
         }
 
     }
